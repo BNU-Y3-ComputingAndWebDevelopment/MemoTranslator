@@ -4,9 +4,11 @@ import android.app.Application;
 import android.util.LruCache;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -62,4 +64,12 @@ public class TranslateViewModel extends AndroidViewModel {
                 fetchDownloadedModels();
             }
         };
+
+        // Start translation if any of the following change: input text, source lang, target lang.
+        translatedText.addSource(sourceText, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                translate().addOnCompleteListener(processTranslation);
+            }
+        });
 }
