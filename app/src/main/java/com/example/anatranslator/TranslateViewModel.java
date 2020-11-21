@@ -33,7 +33,8 @@ public class TranslateViewModel extends AndroidViewModel {
                 }
 
                 @Override
-                protected void entryRemoved(boolean evicted, TranslatorOptions key, Translator oldValue, Translator newValue) {
+                protected void entryRemoved(boolean evicted, TranslatorOptions key,
+                                            Translator oldValue, Translator newValue) {
                     oldValue.close();
                 }
             };
@@ -42,7 +43,7 @@ public class TranslateViewModel extends AndroidViewModel {
     MutableLiveData<TranslateLanguage.Language> targetLang = new MutableLiveData<>();
     MutableLiveData<String> sourceText = new MutableLiveData<>();
     MediatorLiveData<ResultOrError> translatedText = new MediatorLiveData<>();
-    //If there are a sentence or more to translate it will check for the available translation models
+    //If there is one or more sentences to translate it will check for the available translation models
     MutableLiveData<List<String>> availableModels =
             new MutableLiveData<>();
 
