@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
@@ -119,6 +120,20 @@ public class TranslateViewModel extends AndroidViewModel {
                             availableModels.setValue(modelCodes);
                         }
                     });
+        }
+
+        // Starts downloading a remote model for local translation.
+        void downloadLanguage(Language language) {
+            TranslateRemoteModel model =
+                    getModel(TranslateLanguage.fromLanguageTag(language.getCode()));
+            modelManager.download(model, new DownloadConditions.Builder().build())
+                    .addOnCompleteListener(
+                            new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    fetchDownloadedModels();
+                                }
+                            });
         }
 
         /**
