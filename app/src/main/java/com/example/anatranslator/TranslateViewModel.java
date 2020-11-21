@@ -26,6 +26,7 @@ import com.google.mlkit.nl.translate.TranslatorOptions;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class TranslateViewModel extends AndroidViewModel {
@@ -197,4 +198,62 @@ public class TranslateViewModel extends AndroidViewModel {
                 this.error = error;
             }
         }
+
+        /**
+         * Holds the language code (i.e. "en") and the corresponding language name
+         * (i.e. "English")
+         */
+        static class Language implements Comparable<Language> {
+            private String code;
+
+            Language(String code) {
+                this.code = code;
+            }
+
+            String getDisplayName() {
+                return new Locale(code).getDisplayName();
+            }
+
+            String getCode() {
+                return code;
+            }
+
+            public boolean equals(Object o) {
+                if (o == this) {
+                    return true;
+                }
+
+                if (!(o instanceof Language)) {
+                    return false;
+                }
+
+                Language otherLang = (Language) o;
+                return otherLang.code.equals(code);
+            }
+
+            @NonNull
+            public String toString() {
+                return code + " - " + getDisplayName();
+            }
+
+            @Override
+            public int hashCode() {
+                return code.hashCode();
+            }
+
+            @Override
+            public int compareTo(@NonNull Language o) {
+                return this.getDisplayName().compareTo(o.getDisplayName());
+            }
+        }
+
+        @Override
+        protected void onCleared() {
+            super.onCleared();
+            // Each new instance of a translator needs to be closed appropriately. Here we utilize the
+            // ViewModel's onCleared() to clear our LruCache and close each Translator instance when
+            // this ViewModel is no longer used and destroyed.
+            translators.evictAll();
+        }
+
 }
