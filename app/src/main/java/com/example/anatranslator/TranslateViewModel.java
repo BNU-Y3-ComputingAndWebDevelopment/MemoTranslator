@@ -84,4 +84,19 @@ public class TranslateViewModel extends AndroidViewModel {
 
         // Update the list of downloaded models.
         fetchDownloadedModels();
+
+        /**
+         * Holds the result of the translation or any error.
+         */
+        static class ResultOrError {
+            final @Nullable
+            String result;
+            final @Nullable
+            Exception error;
+
+            ResultOrError(@Nullable String result, @Nullable Exception error) {
+                this.result = result;
+                this.error = error;
+            }
+        }
 }
