@@ -1,11 +1,15 @@
 package com.example.anatranslator;
 
+import android.app.Application;
 import android.util.LruCache;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.Translation;
@@ -39,4 +43,23 @@ public class TranslateViewModel extends AndroidViewModel {
     //If there are a sentence or more to translate it will check for the available translation models
     MutableLiveData<List<String>> availableModels =
             new MutableLiveData<>();
+
+    public TranslateViewModel(@NonNull Application application) {
+        super(application);
+        modelManager = RemoteModelManager.getInstance();
+
+        // Create a translation result or error object.
+        final OnCompleteListener<String> processTranslation = new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    translatedText.setValue(new ResultOrError(task.getResult(), null));
+                } else {
+                    translatedText.setValue(new ResultOrError(null, task.getException()));
+                }
+                // Update the list of downloaded models as more may have been
+                // automatically downloaded due to requested translation.
+                fetchDownloadedModels();
+            }
+        };
 }
