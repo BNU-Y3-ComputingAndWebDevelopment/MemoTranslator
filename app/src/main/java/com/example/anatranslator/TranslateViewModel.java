@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
@@ -95,6 +96,10 @@ public class TranslateViewModel extends AndroidViewModel {
                         new Language(TranslateLanguage.fromLanguageTag(languageId)));
             }
             return languages;
+        }
+
+        private TranslateRemoteModel getModel(String languageCode) {
+            return new TranslateRemoteModel.Builder(languageCode).build();
         }
 
         /**
