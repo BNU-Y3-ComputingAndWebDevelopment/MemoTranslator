@@ -72,4 +72,16 @@ public class TranslateViewModel extends AndroidViewModel {
                 translate().addOnCompleteListener(processTranslation);
             }
         });
+
+        Observer<Language> languageObserver = new Observer<Language>() {
+            @Override
+            public void onChanged(@Nullable Language language) {
+                translate().addOnCompleteListener(processTranslation);
+            }
+        };
+        translatedText.addSource(sourceLang, languageObserver);
+        translatedText.addSource(targetLang, languageObserver);
+
+        // Update the list of downloaded models.
+        fetchDownloadedModels();
 }
