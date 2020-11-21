@@ -10,9 +10,11 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateLanguage;
@@ -134,6 +136,51 @@ public class TranslateViewModel extends AndroidViewModel {
                                     fetchDownloadedModels();
                                 }
                             });
+        }
+
+        // Deletes a locally stored translation model.
+        void deleteLanguage(Language language) {
+            TranslateRemoteModel model =
+                    getModel(TranslateLanguage.fromLanguageTag(language.getCode()));
+            modelManager.deleteDownloadedModel(model).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            fetchDownloadedModels();
+                        }
+                    });
+        }
+
+        public Task<String> translate() {
+            final String text = sourceText.getValue();
+            final Language source = sourceLang.getValue();
+            final Language target = targetLang.getValue();
+            if (source == null || target == null || text == null || text.isEmpty()) {
+                return Tasks.forResult("");
+            }
+            String sourceLangCode =
+                    TranslateLanguage.fromLanguageTag(source.getCode());
+            String targetLangCode =
+                    TranslateLanguage.fromLanguageTag(target.getCode());
+            TranslatorOptions options = new TranslatorOptions.Builder()
+                    .setSourceLanguage(sourceLangCode)
+                    .setTargetLanguage(targetLangCode)
+                    .build();
+            return translators.get(options).downloadModelIfNeeded().continueWithTask(
+                    new Continuation<Void, Task<String>>() {
+                        @Override
+                        public Task<String> then(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                return translators.get(options).translate(text);
+                            } else {
+                                Exception e = task.getException();
+                                if (e == null) {
+                                    e = new Exception(getApplication().getString(R.string.common_google_play_services_unknown_issue));
+                                }
+                                return Tasks.forException(e);
+                            }
+                        }
+                    });
         }
 
         /**
