@@ -45,7 +45,6 @@ public class TranslateViewModel extends AndroidViewModel {
     private final RemoteModelManager modelManager;
     private final LruCache<TranslatorOptions, Translator> translators =
             new LruCache<TranslatorOptions, Translator>(NUM_TRANSLATORS){
-
                 @Override
                 protected Translator create(TranslatorOptions key) {
                     return Translation.getClient(key);
@@ -57,9 +56,8 @@ public class TranslateViewModel extends AndroidViewModel {
                     oldValue.close();
                 }
             };
-
-    MutableLiveData<TranslateLanguage.Language> sourceLang = new MutableLiveData<>();
-    MutableLiveData<TranslateLanguage.Language> targetLang = new MutableLiveData<>();
+    MutableLiveData<Language> sourceLang = new MutableLiveData<>();
+    MutableLiveData<Language> targetLang = new MutableLiveData<>();
     MutableLiveData<String> sourceText = new MutableLiveData<>();
     MediatorLiveData<ResultOrError> translatedText = new MediatorLiveData<>();
     //If there is one or more sentences to translate it will check for the available translation models
@@ -105,7 +103,7 @@ public class TranslateViewModel extends AndroidViewModel {
         fetchDownloadedModels();
 
         // Gets a list of all available translation languages.
-        List<Language> getAvailableLanguages() {
+        List<Language> getAvailableLanguages () {
             List<Language> languages = new ArrayList<>();
             List<String> languageIds = TranslateLanguage.getAllLanguages();
             for (String languageId : languageIds) {
@@ -115,12 +113,12 @@ public class TranslateViewModel extends AndroidViewModel {
             return languages;
         }
 
-        private TranslateRemoteModel getModel(String languageCode) {
+        private TranslateRemoteModel getModel (String languageCode){
             return new TranslateRemoteModel.Builder(languageCode).build();
         }
 
         // Updates the list of downloaded language models available for local translation.
-        private void fetchDownloadedModels(){
+        private void fetchDownloadedModels () {
             modelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(
                     new OnSuccessListener<Set<TranslateRemoteModel>>() {
                         @Override
@@ -137,7 +135,7 @@ public class TranslateViewModel extends AndroidViewModel {
         }
 
         // Starts downloading a remote model for local translation.
-        void downloadLanguage(Language language) {
+        void downloadLanguage (Language language){
             TranslateRemoteModel model =
                     getModel(TranslateLanguage.fromLanguageTag(language.getCode()));
             modelManager.download(model, new DownloadConditions.Builder().build())
@@ -151,7 +149,7 @@ public class TranslateViewModel extends AndroidViewModel {
         }
 
         // Deletes a locally stored translation model.
-        void deleteLanguage(Language language) {
+        void deleteLanguage (Language language){
             TranslateRemoteModel model =
                     getModel(TranslateLanguage.fromLanguageTag(language.getCode()));
             modelManager.deleteDownloadedModel(model).addOnCompleteListener(
@@ -163,7 +161,7 @@ public class TranslateViewModel extends AndroidViewModel {
                     });
         }
 
-        public Task<String> translate() {
+        public Task<String> translate () {
             final String text = sourceText.getValue();
             final Language source = sourceLang.getValue();
             final Language target = targetLang.getValue();
@@ -259,12 +257,12 @@ public class TranslateViewModel extends AndroidViewModel {
         }
 
         @Override
-        protected void onCleared() {
+        protected void onCleared () {
             super.onCleared();
             // Each new instance of a translator needs to be closed appropriately. Here we utilize the
             // ViewModel's onCleared() to clear our LruCache and close each Translator instance when
             // this ViewModel is no longer used and destroyed.
             translators.evictAll();
         }
-
+    }
 }
