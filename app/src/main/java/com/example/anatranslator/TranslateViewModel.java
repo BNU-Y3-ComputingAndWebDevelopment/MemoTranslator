@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateLanguage;
@@ -20,7 +21,9 @@ import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class TranslateViewModel extends AndroidViewModel {
     private static final int NUM_TRANSLATORS = 3;
@@ -100,6 +103,22 @@ public class TranslateViewModel extends AndroidViewModel {
 
         private TranslateRemoteModel getModel(String languageCode) {
             return new TranslateRemoteModel.Builder(languageCode).build();
+        }
+
+        // Updates the list of downloaded language models available for local translation.
+        private void fetchDownloadedModels() {
+            modelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(
+                    new OnSuccessListener<Set<TranslateRemoteModel>>() {
+                        @Override
+                        public void onSuccess(Set<TranslateRemoteModel> remoteModels) {
+                            List<String> modelCodes = new ArrayList<>(remoteModels.size());
+                            for (TranslateRemoteModel model : remoteModels) {
+                                modelCodes.add(model.getLanguage());
+                            }
+                            Collections.sort(modelCodes);
+                            availableModels.setValue(modelCodes);
+                        }
+                    });
         }
 
         /**
