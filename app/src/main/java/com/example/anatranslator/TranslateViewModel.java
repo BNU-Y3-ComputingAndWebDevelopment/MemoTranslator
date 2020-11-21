@@ -21,6 +21,9 @@ public class TranslateViewModel extends AndroidViewModel {
                     return Translation.getClient(key);
                 }
 
-
+                @Override
+                protected void entryRemoved(boolean evicted, TranslatorOptions key, Translator oldValue, Translator newValue) {
+                    oldValue.close();
+                }
             }
 }
