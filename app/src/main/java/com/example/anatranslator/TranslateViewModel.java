@@ -110,7 +110,7 @@ public class TranslateViewModel extends AndroidViewModel {
         }
 
         // Updates the list of downloaded language models available for local translation.
-        private void fetchDownloadedModels() {
+        private void fetchDownloadedModels(){
             modelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(
                     new OnSuccessListener<Set<TranslateRemoteModel>>() {
                         @Override
@@ -122,7 +122,8 @@ public class TranslateViewModel extends AndroidViewModel {
                             Collections.sort(modelCodes);
                             availableModels.setValue(modelCodes);
                         }
-                    });
+                    }
+            );
         }
 
         // Starts downloading a remote model for local translation.
