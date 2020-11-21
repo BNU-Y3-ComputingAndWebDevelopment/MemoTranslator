@@ -18,6 +18,7 @@ import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TranslateViewModel extends AndroidViewModel {
@@ -84,6 +85,17 @@ public class TranslateViewModel extends AndroidViewModel {
 
         // Update the list of downloaded models.
         fetchDownloadedModels();
+
+        // Gets a list of all available translation languages.
+        List<Language> getAvailableLanguages() {
+            List<Language> languages = new ArrayList<>();
+            List<String> languageIds = TranslateLanguage.getAllLanguages();
+            for (String languageId : languageIds) {
+                languages.add(
+                        new Language(TranslateLanguage.fromLanguageTag(languageId)));
+            }
+            return languages;
+        }
 
         /**
          * Holds the result of the translation or any error.
