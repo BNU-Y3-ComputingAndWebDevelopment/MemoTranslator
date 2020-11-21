@@ -29,6 +29,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * Institution: Buckinghamshire New University
+ * Academic Year: 2020/2021
+ * Module: Advanced Mobile Systems
+ * Author: Ana Lucia Petinga Zorro
+ *
+ * This class specifies each instance of the translator built with different options based
+ * on the source and target language. By using Lru Cache, the user will be able to manage
+ * the number of translator instances.
+ */
 public class TranslateViewModel extends AndroidViewModel {
     private static final int NUM_TRANSLATORS = 3;
 
