@@ -9,8 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TranslateFragment#newInstance} factory method to
+ * Institution: Buckinghamshire New University
+ * Academic Year: 2020/2021
+ * Module: Advanced Mobile Systems
+ * Author: Ana Lucia Petinga Zorro
+ *
+ * This class contains a simple {@link Fragment} subclass.
+ * Uses the {@link TranslateFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class TranslateFragment extends Fragment {
