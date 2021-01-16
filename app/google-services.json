@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "965039866486",
+    "firebase_url": "https://ana-translator.firebaseio.com",
+    "project_id": "ana-translator",
+    "storage_bucket": "ana-translator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965039866486:android:08afffff986267cc93d557",
+        "android_client_info": {
+          "package_name": "com.ana.translator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965039866486-rff0irsoophn5ksfp8n0r6quo6jd8khu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Uz29k7Tuu1lQ2-Ircs67VrCqjGOTD-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965039866486-rff0irsoophn5ksfp8n0r6quo6jd8khu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
