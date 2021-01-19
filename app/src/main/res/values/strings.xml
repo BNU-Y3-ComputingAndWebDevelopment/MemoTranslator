@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ana Translator</string>
+    <string name="app_name">MemoTranslator</string>
     <string name="translated_text_hint">Translated text</string>
     <string name="downloaded_models_label">Downloaded models: %1$s</string>
     <string name="translate_progress">Translating…</string>

@@ -79,7 +79,7 @@ public class Favorites {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(imageView.getContext());
-                builder.setMessage("Are you Sure to Delete Model")
+                builder.setMessage("Are you Sure to Delete ?")
                         .setCancelable(false)
                         .setTitle("Are you Sure")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {

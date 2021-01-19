@@ -25,11 +25,11 @@ public class AboutDeveloper extends AppCompatActivity {
         //fancyAboutPage.setCoverTintColor(Color.BLUE); //Optional
         fancyAboutPage.setCover(R.drawable.coverimg);
         fancyAboutPage.setName("Ana Zorro");
-        fancyAboutPage.setDescription("Student of Bachelor of Science Specialization in Computer Science and Web Development ");
+        fancyAboutPage.setDescription("Student of BSc in Computing and Web Development ");
         fancyAboutPage.setAppIcon(R.drawable.cakepop);
-        fancyAboutPage.setAppName("Ana Translator App");
+        fancyAboutPage.setAppName("MemoTranslator App");
         fancyAboutPage.setVersionNameAsAppSubTitle("1.0.0");
-        fancyAboutPage.setAppDescription("Ana Translator app is developed for translating the text of one language into another language. It uses Google provided kit for universal translation of text. It has toggle option for reversing the translation and also stores the recent search words via the help of Favorites");
+        fancyAboutPage.setAppDescription("The MemoTranslator app was developed to translate text from over 100 different languages. The user can save translations to the favourites list and share them from favourites section into social media. It uses Google Translator Toolkit for universal translation of text and it has a google option for reversing the translation from one language to another.");
         fancyAboutPage.addEmailLink("al.petingazorro@gmail.com");
         fancyAboutPage.addFacebookLink("https://www.facebook.com/ana.zorro.31");
         fancyAboutPage.addTwitterLink("https://twitter.com/anazorro8");

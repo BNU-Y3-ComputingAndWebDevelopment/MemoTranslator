@@ -121,7 +121,7 @@ public class TranslateFragment extends BaseFragment {
                     viewModel.downloadLanguage(language);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                    builder.setMessage("Are you Sure to Delete Model")
+                    builder.setMessage("Are you Sure to Delete ?")
                             .setCancelable(false)
                             .setTitle("Are you Sure")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -167,7 +167,7 @@ public class TranslateFragment extends BaseFragment {
                     viewModel.downloadLanguage(language);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                    builder.setMessage("Are you Sure to Delete Model")
+                    builder.setMessage("Are you Sure to Delete ?")
                             .setCancelable(false)
                             .setTitle("Are you Sure")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -209,7 +209,7 @@ public class TranslateFragment extends BaseFragment {
                 viewModel.sourceText.postValue(s.toString());
             }
         });
-        viewModel.translatedText.observe(this, new Observer<ResultOrError>() {
+        viewModel.translatedText.observe(getViewLifecycleOwner(), new Observer<ResultOrError>() {
             @Override
             public void onChanged(TranslateViewModel.ResultOrError resultOrError) {
                 if (resultOrError.error != null) {
@@ -220,7 +220,7 @@ public class TranslateFragment extends BaseFragment {
             }
         });
 
-        viewModel.availableModels.observe(this, new Observer<List<String>>() {
+        viewModel.availableModels.observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> firebaseTranslateRemoteModels) {
                 String output = getContext().getString(R.string.downloaded_models_label,
@@ -250,7 +250,7 @@ public class TranslateFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mDatabase.userDao().getAll().observe(this, new Observer<List<Favorites>>() {
+        mDatabase.userDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<Favorites>>() {
             @Override
             public void onChanged(List<Favorites> histories) {
                 List<Object> list = new ArrayList<>();
